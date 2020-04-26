@@ -19,3 +19,14 @@ Sample JSON
   "creditCardNumber": "4111311121110000"
 }
 ```
+Swagger UI Page
+
+![Swagger UI Page](img/home.png "Swagger UI Page")
+
+Swagger UI Page - API List
+
+![Swagger UI Page - API List](img/api1.png "Swagger UI Page - API List")
+
+Swagger UI Page - API List 2
+
+![Swagger UI Page - API List 2](img/api2.png "Swagger UI Page - API List 2")
