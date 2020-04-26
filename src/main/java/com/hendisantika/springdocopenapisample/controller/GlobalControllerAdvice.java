@@ -1,10 +1,17 @@
 package com.hendisantika.springdocopenapisample.controller;
 
+import com.hendisantika.springdocopenapisample.model.Problem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+import java.util.UUID;
 
 /**
  * Created by IntelliJ IDEA.
@@ -24,4 +31,16 @@ public class GlobalControllerAdvice {
      * */
 
     private static final Logger logger = LoggerFactory.getLogger(GlobalControllerAdvice.class);
+
+    @ExceptionHandler(Throwable.class)
+    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<Problem> problem(final Throwable e) {
+        String message = e.getMessage();
+        //might actually prefer to use a geeric message
+        message = "Problem occured";
+        UUID uuid = UUID.randomUUID();
+        String logRef = uuid.toString();
+        logger.error("logRef=" + logRef, message, e);
+        return new ResponseEntity<Problem>(new Problem(logRef, message), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
