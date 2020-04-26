@@ -11,6 +11,7 @@ package com.hendisantika.springdocopenapisample.model;
  */
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.CreditCardNumber;
@@ -30,6 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Person {
     private long id;
 
