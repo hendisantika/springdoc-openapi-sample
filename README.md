@@ -30,3 +30,11 @@ Swagger UI Page - API List
 Swagger UI Page - API List 2
 
 ![Swagger UI Page - API List 2](img/api2.png "Swagger UI Page - API List 2")
+
+Swagger UI Page - API List 3
+
+![Swagger UI Page - API List 3](img/api3.png "Swagger UI Page - API List 3")
+
+Swagger UI Page - API List 4
+
+![Swagger UI Page - API List 4](img/api4.png "Swagger UI Page - API List 4")
