@@ -17,12 +17,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.Random;
 
 @RestController
 public class PersonController {
+    private Random ran = new Random();
 
     @RequestMapping(path = "/person", method = RequestMethod.POST)
     public Person person(@Valid @RequestBody Person person) {
+        int nxt = ran.nextInt(10);
+        if (nxt >= 5) {
+            throw new RuntimeException("Breaking Logic!");
+        }
         return person;
     }
 
