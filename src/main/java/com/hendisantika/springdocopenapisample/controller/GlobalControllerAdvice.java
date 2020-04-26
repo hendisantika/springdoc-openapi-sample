@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
@@ -108,5 +109,20 @@ public class GlobalControllerAdvice {
         String supported = "Supported content types: " + MediaType.toString(ex.getSupportedMediaTypes());
         ErrorMessage errorMessage = new ErrorMessage(unsupported, supported);
         return new ResponseEntity(errorMessage, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorMessage> handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
+        Throwable mostSpecificCause = ex.getMostSpecificCause();
+        ErrorMessage errorMessage;
+        if (mostSpecificCause != null) {
+            String exceptionName = mostSpecificCause.getClass().getName();
+            String message = mostSpecificCause.getMessage();
+            errorMessage = new ErrorMessage(exceptionName, message);
+        } else {
+            errorMessage = new ErrorMessage(ex.getMessage());
+        }
+        return new ResponseEntity(errorMessage, HttpStatus.BAD_REQUEST);
     }
 }
