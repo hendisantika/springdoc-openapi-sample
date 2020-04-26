@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -98,5 +99,14 @@ public class GlobalControllerAdvice {
         errors.add(error);
         ErrorMessage errorMessage = new ErrorMessage(errors);
         return new ResponseEntity(errorMessage, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+    @ResponseStatus(code = HttpStatus.UNSUPPORTED_MEDIA_TYPE)
+    public ResponseEntity<ErrorMessage> handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException ex) {
+        String unsupported = "Unsupported content type: " + ex.getContentType();
+        String supported = "Supported content types: " + MediaType.toString(ex.getSupportedMediaTypes());
+        ErrorMessage errorMessage = new ErrorMessage(unsupported, supported);
+        return new ResponseEntity(errorMessage, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
     }
 }
