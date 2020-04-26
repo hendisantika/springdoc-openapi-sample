@@ -12,7 +12,7 @@
     <artifactId>springdoc-openapi-sample</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>springdoc-openapi-sample</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Demo project for Spring Boot with Open API 3 documentation</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -22,6 +22,19 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.2.32</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
 
         <dependency>
