@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -69,6 +72,20 @@ public class GlobalControllerAdvice {
         ErrorMessage errorMessage = new ErrorMessage(errors);
         //Object result=ex.getBindingResult();//instead of above can allso pass the more detailed bindingResult
         return new ResponseEntity(errorMessage, HttpStatus.BAD_REQUEST);
+    }
 
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorMessage> handleConstraintViolatedException(ConstraintViolationException ex) {
+        Set<ConstraintViolation<?>> constraintViolations = ex.getConstraintViolations();
+        List<String> errors = new ArrayList<>(constraintViolations.size());
+        String error;
+        for (ConstraintViolation constraintViolation : constraintViolations) {
+            error = constraintViolation.getMessage();
+            errors.add(error);
+        }
+
+        ErrorMessage errorMessage = new ErrorMessage(errors);
+        return new ResponseEntity(errorMessage, HttpStatus.BAD_REQUEST);
     }
 }
