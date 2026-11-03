@@ -22,8 +22,8 @@ class CustomConverter extends ModelResolver {
         super(mapper, new QualifiedTypeNameResolver());
     }
 
-    public static void add(ObjectMapper ojectMapper) {
-        ModelConverters.getInstance().addConverter(new CustomConverter(ojectMapper));
+    public static void add(ObjectMapper objectMapper) {
+        ModelConverters.getInstance().addConverter(new CustomConverter(objectMapper));
     }
 
     static class QualifiedTypeNameResolver extends TypeNameResolver {

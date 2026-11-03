@@ -2,6 +2,8 @@ package com.hendisantika.springdocopenapisample.controller;
 
 import com.hendisantika.springdocopenapisample.model.ErrorMessage;
 import com.hendisantika.springdocopenapisample.model.Problem;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -18,8 +20,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -53,7 +53,7 @@ public class GlobalControllerAdvice {
         UUID uuid = UUID.randomUUID();
         String logRef = uuid.toString();
         logger.error("logRef=" + logRef, message, e);
-        return new ResponseEntity<Problem>(new Problem(logRef, message), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(new Problem(logRef, message), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

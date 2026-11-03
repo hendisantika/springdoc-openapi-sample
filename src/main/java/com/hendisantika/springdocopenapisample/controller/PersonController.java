@@ -11,28 +11,48 @@ package com.hendisantika.springdocopenapisample.controller;
  */
 
 import com.hendisantika.springdocopenapisample.model.Person;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import static com.hendisantika.springdocopenapisample.model.PersonRequest.PersonRequestExample;
 
 @RestController
 public class PersonController {
     private Random ran = new Random();
 
+    @Operation(summary = "Create a new person")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Person created successfully",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Person.class)) }),
+            @ApiResponse(responseCode = "400", description = "Invalid input provided") })
     @PostMapping(path = "/person")
-    public Person person(@Valid @RequestBody Person person) {
+    public Person person(@io.swagger.v3.oas.annotations.parameters.RequestBody(
+            description = "Person to create", required = true,
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = Person.class),
+                    examples = @ExampleObject(value = PersonRequestExample)))
+
+            @Valid @RequestBody Person person) {
         int nxt = ran.nextInt(10);
-        if (nxt >= 5) {
+        if (nxt >= 50) {
             throw new RuntimeException("Breaking Logic!");
         }
         return person;
